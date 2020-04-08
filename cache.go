@@ -1,9 +1,5 @@
 package cache
 
-import (
-	"go.uber.org/zap"
-)
-
 // Store is interface to cache store
 type Store interface {
 	Get(key string) ([]byte, error)
@@ -24,7 +20,6 @@ type Service interface {
 // service ...
 type cacheService struct {
 	Store Store
-	l     *zap.Logger
 }
 
 // Get ...
@@ -60,7 +55,7 @@ func (s *cacheService) itemKey(key string) (string, error) {
 
 // Tags ...
 func (s *cacheService) Tags(keys ...string) (*taggedCacheService, error) {
-	taggedCache, err := NewTaggedCacheService(s.Store, s.l, keys...)
+	taggedCache, err := NewTaggedCacheService(s.Store, keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +64,7 @@ func (s *cacheService) Tags(keys ...string) (*taggedCacheService, error) {
 }
 
 // New instance of simply cache
-func NewCacheService(store Store, l *zap.Logger) (*cacheService, error) {
+func NewCacheService(store Store) (*cacheService, error) {
 
-	return &cacheService{Store: store, l: l}, nil
+	return &cacheService{Store: store}, nil
 }

@@ -4,14 +4,12 @@ import (
 	"strings"
 
 	"github.com/mintance/go-uniqid"
-	"go.uber.org/zap"
 )
 
 // store is a collection of method to access to store
 type TagSet struct {
 	store Store
 	names []string
-	l     *zap.Logger
 }
 
 func (ts *TagSet) reset() error {
@@ -100,10 +98,9 @@ func (ts *TagSet) getNames() []string {
 }
 
 // NewTagSet instance of for tagged cache
-func NewTagSet(store Store, l *zap.Logger, names ...string) *TagSet {
+func NewTagSet(store Store, names ...string) *TagSet {
 	return &TagSet{
 		store: store,
 		names: names,
-		l:     l,
 	}
 }

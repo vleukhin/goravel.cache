@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"gitlab.com/nativerent/adunit/pkg/common/cache/errs"
+	"github.com/gudron/goravel.cache/errs"
 )
 
 // inMemoryStore is a collection of method to for run tests
@@ -41,12 +41,10 @@ func (s *inMemoryStore) Get(key string) ([]byte, error) {
 }
 
 func (s *inMemoryStore) Increment(key string, value uint64) (uint64, error) {
-
 	return 1, nil
 }
 
 func (s *inMemoryStore) Decrement(key string, value uint64) (uint64, error) {
-
 	return 1, nil
 }
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/bradfitz/gomemcache/memcache"
-	"gitlab.com/nativerent/adunit/pkg/common/cache/errs"
+	"github.com/gudron/goravel.cache/errs"
 )
 
 // memcacheStore is a collection of method to access to store

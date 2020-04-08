@@ -3,8 +3,6 @@ package cache
 import (
 	"crypto/sha1"
 	"fmt"
-
-	"go.uber.org/zap"
 )
 
 // taggedCacheService ...
@@ -12,7 +10,6 @@ type taggedCacheService struct {
 	cacheService
 	TagSet *TagSet
 	Store  Store
-	l      *zap.Logger
 }
 
 func (tc *taggedCacheService) putManyForever() {
@@ -28,15 +25,11 @@ func (tc *taggedCacheService) Get(keys ...string) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	tc.l.Debug("Get", zap.Any("itemKey", itemKey))
 
 	cacheData, err := tc.Store.Get(itemKey)
 	if err != nil {
 		return nil, err
 	}
-
-	tc.l.Debug("Get", zap.Any("cacheData", cacheData))
-	tc.l.Error("Get", zap.Error(err))
 
 	return cacheData, nil
 }
@@ -96,7 +89,7 @@ func (tc *taggedCacheService) getTags() *TagSet {
 }
 
 func (tc *taggedCacheService) Tags(keys ...string) (*taggedCacheService, error) {
-	taggedCacheService, err := NewTaggedCacheService(tc.Store, tc.l, keys...)
+	taggedCacheService, err := NewTaggedCacheService(tc.Store, keys...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,12 +98,11 @@ func (tc *taggedCacheService) Tags(keys ...string) (*taggedCacheService, error) 
 }
 
 // NewTaggedCacheService instance of tagged cache
-func NewTaggedCacheService(store Store, l *zap.Logger, names ...string) (*taggedCacheService, error) {
-	tagSet := NewTagSet(store, l, names...)
+func NewTaggedCacheService(store Store, names ...string) (*taggedCacheService, error) {
+	tagSet := NewTagSet(store, names...)
 
 	return &taggedCacheService{
 		Store:  store,
 		TagSet: tagSet,
-		l:      l,
 	}, nil
 }

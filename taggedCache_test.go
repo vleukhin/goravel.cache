@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"gitlab.com/nativerent/adunit/pkg/common/cache/errs"
-	cacheStore "gitlab.com/nativerent/adunit/pkg/common/cache/store"
+	"github.com/gudron/goravel.cache/errs"
+	cacheStore "github.com/gudron/goravel.cache/store"
 	"go.uber.org/zap"
 )
 
@@ -59,7 +59,7 @@ func TestTaggedCacheService_Get(t *testing.T) {
 	for i, tCase := range testCases {
 		t.Run(fmt.Sprintf("test %s", tCase.TestName), func(t *testing.T) {
 			store, _ := cacheStore.NewInMemoryStore(context.Background(), "cn")
-			cacheService, _ := NewTaggedCacheService(store, l, tCase.Tags...)
+			cacheService, _ := NewTaggedCacheService(store, tCase.Tags...)
 
 			val := []byte(tCase.Value)
 
@@ -71,7 +71,6 @@ func TestTaggedCacheService_Get(t *testing.T) {
 
 			expected := tCase.Result
 
-			l.Debug("store", zap.Any("values", store))
 			assert.Equal(t, err, tCase.Error,
 				"they should be %s ,but %s \n Test name: %d", errs.ErrCacheMiss.Error(), err, i)
 
