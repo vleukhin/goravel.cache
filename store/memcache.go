@@ -3,6 +3,7 @@ package store
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/bradfitz/gomemcache/memcache"
 	"github.com/gudron/goravel.cache/errs"
@@ -87,16 +88,20 @@ func (s *memcacheStore) setPrefix(prefix string) {
 }
 
 // NewMemcacheStore on memcached
-func NewMemcacheStore(ctx context.Context, host string, port int, prefix string) (*memcacheStore, error) {
+func NewMemcacheStore(ctx context.Context, cfg CacheStoreConfig) (*memcacheStore, error) {
 	mc := memcache.New(fmt.Sprintf(
 		"%s:%d",
-		host, port))
+		cfg.Host, cfg.Port))
 
+	mc.Ping()
+
+	mc.MaxIdleConns = cfg.MaxIdleConnections
+	mc.Timeout = time.Duration(cfg.ReadWriteTimeOut) * time.Millisecond
 	store := &memcacheStore{
 		mc: mc,
 	}
 
-	store.setPrefix(prefix)
+	store.setPrefix(cfg.Prefix)
 
 	return store, nil
 }
