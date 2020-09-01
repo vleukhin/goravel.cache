@@ -41,12 +41,12 @@ func (s *cacheService) Get(keys ...string) ([]byte, error) {
 
 // Increment ...
 func (s *cacheService) Increment(key string, value uint64) (uint64, error) {
-	return 0, nil
+	return s.Store.Increment(key, value)
 }
 
 // Decrement ...
 func (s *cacheService) Decrement(key string, value uint64) (uint64, error) {
-	return 0, nil
+	return s.Store.Decrement(key, value)
 }
 
 func (s *cacheService) itemKey(key string) (string, error) {
