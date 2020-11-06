@@ -3,7 +3,7 @@ package store
 import (
 	"context"
 
-	"github.com/gudron/goravel.cache/errs"
+	"github.com/vleukhin/goravel.cache/errs"
 )
 
 // inMemoryStore is a collection of method to for run tests

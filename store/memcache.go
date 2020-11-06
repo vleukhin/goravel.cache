@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/bradfitz/gomemcache/memcache"
-	"github.com/gudron/goravel.cache/errs"
+	"github.com/vleukhin/goravel.cache/errs"
 )
 
 // memcacheStore is a collection of method to access to store

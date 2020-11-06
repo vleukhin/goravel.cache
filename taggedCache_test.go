@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/gudron/goravel.cache/errs"
-	cacheStore "github.com/gudron/goravel.cache/store"
+	"github.com/vleukhin/goravel.cache/errs"
+	cacheStore "github.com/vleukhin/goravel.cache/store"
 	"go.uber.org/zap"
 )
 
